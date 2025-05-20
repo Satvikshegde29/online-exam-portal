@@ -1,16 +1,24 @@
 package com.examportal.controller;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.examportal.model.Exam;
 import com.examportal.model.Question;
 import com.examportal.model.User;
 import com.examportal.repository.ExamRepository;
 import com.examportal.repository.QuestionRepository;
 import com.examportal.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -64,9 +72,11 @@ public class AdminController {
         Optional<Question> questionOpt = questionRepository.findById(id);
         if (questionOpt.isEmpty()) return ResponseEntity.notFound().build();
         Question question = questionOpt.get();
-        question.setContent(questionDetails.getContent());
-        question.setAnswer(questionDetails.getAnswer());
-        question.setOptions(questionDetails.getOptions());
+        
+        question.setText(questionDetails.getText());
+        question.setCategory(questionDetails.getCategory());
+        question.setDifficulty(questionDetails.getDifficulty());
+        question.setCorrectAnswer(questionDetails.getCorrectAnswer());
         // Add other fields as needed
         return ResponseEntity.ok(questionRepository.save(question));
     }
