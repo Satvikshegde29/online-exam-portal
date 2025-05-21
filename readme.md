@@ -32,97 +32,57 @@ This document provides the Low-Level Design (LLD) for an Online Exam Portal aime
 ## Module-Wise Design
 ### 4.1 Admin Module
 **Features:**
-- Create, update, and delete exams and questions.
-- Assign roles (e.g., Examiner, Student).
- 
-**Data Flow:**
-- Admin submits exam details via the frontend.
-- Backend validates and stores the data in the database.
-- Confirmation is displayed on the frontend.
- 
-**Entities:**
-- Exam:
-  - ExamID
-  - Title
-  - Description
-  - Duration
-  - TotalMarks
+Create, update, delete exams and questions.
+Assign roles.
+
+**Endpoints:**
+POST /api/admin/exams – Create exam
+PUT /api/admin/exams/{id} – Update exam
+DELETE /api/admin/exams/{id} – Delete exam
+POST /api/admin/questions – Add question
+PUT /api/admin/questions/{id} – Update question
+DELETE /api/admin/questions/{id} – Delete question
+POST /api/admin/users/assign-role – Assign role to user
  
 ### 4.2 User Module
 **Features:**
-- User registration and login.
-- View and update profiles.
- 
-**Data Flow:**
-- User submits details via the frontend.
-- Backend validates, encrypts sensitive data, and stores it in the database.
- 
-**Entities:**
-- User:
-  - UserID
-  - Name
-  - Email
-  - Password
-  - Role (Admin/Student/Examiner)
+Register, login, and manage profile.
+
+**Endpoints:**
+POST /api/auth/register – Register user
+POST /api/auth/login – Login user
+GET /api/users/profile – Get user profile
+PUT /api/users/profile – Update user profile
  
 ### 4.3 Exam Management Module
 **Features:**
-- Display exam questions and record responses.
-- Calculate and display results.
- 
-**Data Flow:**
-- User selects an exam via the frontend.
-- Backend fetches questions and stores user responses.
-- Results are calculated and displayed to the user.
- 
-**Entities:**
-- Response:
-  - ResponseID
-  - ExamID
-  - UserID
-  - QuestionID
-  - Answer
-  - MarksObtained
+Attempt exams, submit answers, view results.
+
+**Endpoints:**
+GET /api/exams – List available exams
+GET /api/exams/{id}/questions – Get questions for an exam
+POST /api/exams/{id}/submit – Submit exam responses
+GET /api/results/{userId} – View results
+
  
 ### 4.4 Question Bank Module
 **Features:**
-- Manage questions, including categories and difficulty levels.
-- Import/export questions in bulk.
- 
-**Data Flow:**
-- Admin adds or imports questions via the frontend.
-- Backend validates and stores the questions in the database.
- 
-**Entities:**
-- Question:
-  - QuestionID
-  - Text
-  - Category
-  - Difficulty
-  - CorrectAnswer
+Manage categorized questions, import/export.
+
+**Endpoints:**
+GET /api/questions – List all questions
+POST /api/questions/import – Import questions in bulk
+GET /api/questions/export – Export questions
  
 ### 4.5 Analytics and Reporting Module
 **Features:**
-- View individual and aggregate performance reports.
-- Export data for analysis.
- 
-**Data Flow:**
-- Admin selects report criteria via the frontend.
-- Backend processes the data and returns it to the frontend.
- 
-**Entities:**
-- Report:
-  - ReportID
-  - ExamID
-  - UserID
-  - TotalMarks
-  - PerformanceMetrics
- 
-## Deployment Strategy
-### 5.1 Local Deployment
-- Frontend: Served using local servers (e.g., ng serve for Angular or equivalent for React).
-- Backend: Deployed locally using Spring Boot or ASP.NET Core.
-- Database: Local instance of the relational database for testing.
+Generate and export performance reports.
+
+**Endpoints:**
+GET /api/reports/user/{userId} – Get user performance report
+GET /api/reports/exam/{examId} – Get exam performance report
+GET /api/reports/export – Export reports
+
  
 ## Database Design
 ### 6.1 Tables and Relationships
@@ -146,18 +106,6 @@ This document provides the Low-Level Design (LLD) for an Online Exam Portal aime
 - Exam Attempt Page
 - Results and Analytics Dashboard
  
-## Non-Functional Requirements
-### 8.1 Performance
-- The portal must handle 500 concurrent users.
- 
-### 8.2 Scalability
-- Designed for multiple institutes and large user bases.
- 
-### 8.3 Security
-- Implement secure authentication and access control.
- 
-### 8.4 Usability
-- Ensure an intuitive and responsive user interface.
  
 ## Project Structure
 /online-exam-portal-backend
