@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 com\examportal\service\UserService.class
 com\examportal\exception\ResourceNotFoundException.class
 com\examportal\exception\GlobalExceptionHandler.class
@@ -6,3 +7,7 @@ com\examportal\repository\UserRepository.class
 com\examportal\controller\Valid.class
 com\examportal\controller\UserController.class
 com\examportal\ExamPortalApplication.class
+=======
+com\examportal\ExamPortalApplication.class
+com\examportal\exception\GlobalExceptionHandler.class
+>>>>>>> cce088a159e2d9090e776ba3c158af7c9d195289
