@@ -8,5 +8,8 @@ public class ExamPortalApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ExamPortalApplication.class, args);
+        System.out.println("Exam Portal Application is running...");
+        System.out.println("Welcome to the Online Exam Portal!");
+        System.out.println("You can register, login, and take exams.");
     }
 }
