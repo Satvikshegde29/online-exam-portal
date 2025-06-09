@@ -24,7 +24,7 @@ public class User {
     @NotBlank(message = "Password is required")
     private String password;
 
-    private String role; // Admin, Student, Examiner
+    private String role; // Ensure roles are stored as "ROLE_ADMIN", "ROLE_USER", etc.
 
     // Getters and Setters
     public Long getUserId() {

@@ -1,14 +1,15 @@
 package com.examportal.service.Impl;
 
-import com.examportal.exception.ResourceNotFoundException;
-import com.examportal.model.User;
-import com.examportal.repository.UserRepository;
-import com.examportal.service.UserService;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.examportal.exception.ResourceNotFoundException;
+import com.examportal.model.User;
+import com.examportal.repository.UserRepository;
+import com.examportal.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,19 +20,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-
     @Override
     public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // Hash the password
         return userRepository.save(user);
     }
-
-    // @Override
-    // public boolean authenticateUser(String email, String password) {
-    //     // Find user by email and check password
-    //     Optional<User> user = userRepository.findByEmail(email);
-    //     return user.isPresent() && user.get().getPassword().equals(password);
-    // }
 
     @Override
     public boolean authenticateUser(String email, String password) {
@@ -41,7 +34,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        // Find user by ID or throw ResourceNotFoundException
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
         user.setPassword(null); // Do not expose password
@@ -50,17 +42,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(Long userId, User updatedUser) {
-        // Find the existing user or throw ResourceNotFoundException
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
 
-        // Update user details
         existingUser.setName(updatedUser.getName());
         existingUser.setEmail(updatedUser.getEmail());
         existingUser.setPassword(updatedUser.getPassword());
         existingUser.setRole(updatedUser.getRole());
 
-        // Save updated user
         return userRepository.save(existingUser);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
     }
 }

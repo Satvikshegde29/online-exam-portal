@@ -95,7 +95,7 @@ public class AdminController {
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isEmpty()) return ResponseEntity.notFound().build();
         User user = userOpt.get();
-        user.setRole(role);
+        user.setRole("ROLE_" + role.toUpperCase()); // Prefix role with "ROLE_"
         return ResponseEntity.ok(userRepository.save(user));
     }
 }

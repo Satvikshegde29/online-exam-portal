@@ -17,9 +17,10 @@ public class JwtUtil {
     private String SECRET_KEY;
 
     // Generate JWT Token
-    public String generateToken(String email) {
+    public String generateToken(String email, String role) {
         return Jwts.builder()
                 .setSubject(email)
+                .claim("role", role) // Add role to the token
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -35,6 +36,11 @@ public class JwtUtil {
     // Extract Email from Token
     public String extractEmail(String token) {
         return extractClaims(token).getSubject();
+    }
+
+    // Extract Role from Token
+    public String extractRole(String token) {
+        return extractClaims(token).get("role", String.class);
     }
 
     // Check if Token is Expired
