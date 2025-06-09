@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +30,9 @@ public class Question {
     @CollectionTable(name = "question_options", joinColumns = @JoinColumn(name = "question_id"))
     @Column(name = "option_text")
     private List<String> options;
+
+    @ManyToMany(mappedBy = "questions")
+    private List<Exam> exams;
 
     // Constructors
     public Question() {}
@@ -89,5 +93,13 @@ public class Question {
 
     public void setOptions(List<String> options) {
         this.options = options;
+    }
+
+    public List<Exam> getExams() {
+        return exams;
+    }
+
+    public void setExams(List<Exam> exams) {
+        this.exams = exams;
     }
 }

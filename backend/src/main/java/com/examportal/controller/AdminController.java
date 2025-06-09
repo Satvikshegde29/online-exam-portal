@@ -1,5 +1,7 @@
 package com.examportal.controller;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,12 @@ public class AdminController {
 
     // Create Exam
     @PostMapping("/exams")
-    public ResponseEntity<Exam> createExam(@RequestBody Exam exam) {
+    public ResponseEntity<Exam> createExam(@RequestBody Exam exam, @RequestParam Long examinerId, @RequestParam List<Long> questionIds) {
+        User examiner = userRepository.findById(examinerId)
+            .orElseThrow(() -> new RuntimeException("Examiner not found"));
+        List<Question> questions = questionRepository.findAllById(questionIds);
+        exam.setExaminer(examiner);
+        exam.setQuestions(questions);
         return ResponseEntity.ok(examRepository.save(exam));
     }
 
