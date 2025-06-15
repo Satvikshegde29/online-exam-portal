@@ -2,6 +2,8 @@ package com.examportal.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -19,6 +21,7 @@ public class Question {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "question_id")
     private Long questionId;
 
     private String text;
@@ -31,7 +34,10 @@ public class Question {
     @Column(name = "option_text")
     private List<String> options;
 
+    private int marks; // <-- Add this field
+
     @ManyToMany(mappedBy = "questions")
+    @JsonIgnore
     private List<Exam> exams;
 
     // Constructors
@@ -93,6 +99,14 @@ public class Question {
 
     public void setOptions(List<String> options) {
         this.options = options;
+    }
+
+    public int getMarks() {
+        return marks;
+    }
+
+    public void setMarks(int marks) {
+        this.marks = marks;
     }
 
     public List<Exam> getExams() {

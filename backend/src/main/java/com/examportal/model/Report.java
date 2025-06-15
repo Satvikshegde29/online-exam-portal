@@ -18,6 +18,8 @@ public class Report {
 
     private Integer totalMarks;
 
+    private Integer score;
+
     private String performanceMetric;
 
     // Getters and Setters
@@ -51,6 +53,14 @@ public class Report {
 
     public void setTotalMarks(Integer totalMarks) {
         this.totalMarks = totalMarks;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public String getPerformanceMetric() {

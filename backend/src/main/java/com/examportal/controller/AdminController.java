@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.examportal.model.Exam;
 import com.examportal.model.Question;
@@ -104,5 +105,20 @@ public class AdminController {
         User user = userOpt.get();
         user.setRole("ROLE_" + role.toUpperCase()); // Prefix role with "ROLE_"
         return ResponseEntity.ok(userRepository.save(user));
+    }
+
+    // Add Questions to Exam
+    @PutMapping("/exams/{examId}/questions")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> addQuestionsToExam(
+            @PathVariable Long examId,
+            @RequestParam List<Long> questionIds) {
+        Optional<Exam> examOpt = examRepository.findById(examId);
+        if (examOpt.isEmpty()) return ResponseEntity.notFound().build();
+        Exam exam = examOpt.get();
+        List<Question> questions = questionRepository.findAllById(questionIds);
+        exam.getQuestions().addAll(questions);
+        examRepository.save(exam);
+        return ResponseEntity.ok("Questions added to exam.");
     }
 }
