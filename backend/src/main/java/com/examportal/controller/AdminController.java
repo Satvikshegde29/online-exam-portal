@@ -3,10 +3,12 @@ package com.examportal.controller;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +24,7 @@ import com.examportal.model.User;
 import com.examportal.repository.ExamRepository;
 import com.examportal.repository.QuestionRepository;
 import com.examportal.repository.UserRepository;
+import com.examportal.service.AdminService;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -36,16 +39,27 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
 
-    // Create Exam
-    @PostMapping("/exams")
-    public ResponseEntity<Exam> createExam(@RequestBody Exam exam, @RequestParam Long examinerId, @RequestParam List<Long> questionIds) {
-        User examiner = userRepository.findById(examinerId)
-            .orElseThrow(() -> new RuntimeException("Examiner not found"));
-        List<Question> questions = questionRepository.findAllById(questionIds);
-        exam.setExaminer(examiner);
-        exam.setQuestions(questions);
-        return ResponseEntity.ok(examRepository.save(exam));
+    // Get all users (Admin only)
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userRepository.findAll());
     }
+
+    // Create Exam
+   @Autowired
+private AdminService adminService;
+
+@PostMapping("/exams")
+@PreAuthorize("hasRole('ADMIN')")
+public ResponseEntity<?> createExam(@RequestBody Map<String, Object> examData) {
+    try {
+        Exam exam = adminService.createExam(examData);
+        return ResponseEntity.ok(exam);
+    } catch (RuntimeException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+}
 
     // Update Exam
     @PutMapping("/exams/{id}")
@@ -99,6 +113,7 @@ public class AdminController {
 
     // Assign Role
     @PutMapping("/users/{id}/role")
+       @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> assignRole(@PathVariable Long id, @RequestParam String role) {
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isEmpty()) return ResponseEntity.notFound().build();
@@ -120,5 +135,13 @@ public class AdminController {
         exam.getQuestions().addAll(questions);
         examRepository.save(exam);
         return ResponseEntity.ok("Questions added to exam.");
+    }
+
+    // Get all Exams (Admin only)
+    @GetMapping("/exams")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Exam>> getAllExams() {
+        List<Exam> exams = adminService.getAllExams();
+        return ResponseEntity.ok(exams);
     }
 }

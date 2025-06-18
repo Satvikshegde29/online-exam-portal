@@ -42,12 +42,7 @@ public class UserController {
     // User Registration
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@Valid @RequestBody User user) {
-        // Default role is USER unless explicitly set
-        if (user.getRole() == null || user.getRole().isEmpty()) {
-            user.setRole("ROLE_USER");
-        } else {
-            user.setRole("ROLE_" + user.getRole().toUpperCase()); // Prefix role with "ROLE_"
-        }
+        user.setRole("ROLE_STUDENT"); // Always set to student
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
