@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.examportal.exception.ResourceNotFoundException;
 
 import com.examportal.model.Exam;
 import com.examportal.model.Question;
@@ -23,6 +24,14 @@ public class AdminServiceImpl implements AdminService {
     private UserRepository userRepository;
     @Autowired
     private QuestionRepository questionRepository;
+
+    @Override
+    public User getUserById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
+        user.setPassword(null); // Do not expose password
+        return user;
+    }
 
     @Override
     public Question addQuestion(Question question) {

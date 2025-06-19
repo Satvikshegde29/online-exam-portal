@@ -5,9 +5,11 @@ import java.util.Map;
 
 import com.examportal.model.Exam;
 import com.examportal.model.Question;
+import com.examportal.model.User;
 
 
 public interface AdminService {
+    User getUserById(Long userId);
     Question addQuestion(Question question);
     Question updateQuestion(Long questionId, Question updatedQuestion);
     void deleteQuestion(Long questionId);

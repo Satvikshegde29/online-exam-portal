@@ -1,7 +1,6 @@
 package com.examportal.controller;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Map;
 
@@ -25,6 +24,7 @@ import com.examportal.repository.ExamRepository;
 import com.examportal.repository.QuestionRepository;
 import com.examportal.repository.UserRepository;
 import com.examportal.service.AdminService;
+import com.examportal.service.UserService;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -39,6 +39,7 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
 
+
     // Get all users (Admin only)
     @GetMapping("/users")
     @PreAuthorize("hasRole('ADMIN')")
@@ -48,7 +49,7 @@ public class AdminController {
 
     // Create Exam
    @Autowired
-private AdminService adminService;
+    private AdminService adminService;
 
 @PostMapping("/exams")
 @PreAuthorize("hasRole('ADMIN')")
@@ -121,6 +122,14 @@ public ResponseEntity<?> createExam(@RequestBody Map<String, Object> examData) {
         user.setRole("ROLE_" + role.toUpperCase()); // Prefix role with "ROLE_"
         return ResponseEntity.ok(userRepository.save(user));
     }
+    // users profile by id
+    @GetMapping("/{userId}")
+    @PreAuthorize("hasRole('ADMIN') or #userId == authentication.principal")
+    public ResponseEntity<User> getUserProfile(@PathVariable Long userId) {
+        User user = adminService.getUserById(userId);
+        return ResponseEntity.ok(user);
+    }
+
 
     // Add Questions to Exam
     @PutMapping("/exams/{examId}/questions")

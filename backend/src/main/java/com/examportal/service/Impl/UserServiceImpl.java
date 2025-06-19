@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.examportal.exception.ResourceNotFoundException;
+
 import com.examportal.model.User;
 import com.examportal.model.Exam;
 import com.examportal.repository.UserRepository;
@@ -38,13 +38,7 @@ public class UserServiceImpl implements UserService {
         return user.isPresent() && passwordEncoder.matches(password, user.get().getPassword());
     }
 
-    @Override
-    public User getUserById(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
-        user.setPassword(null); // Do not expose password
-        return user;
-    }
+    
 
     @Override
     public User updateUser(Long userId, User updatedUser) {

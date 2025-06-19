@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.examportal.model.Exam;
 import com.examportal.model.User;
-import com.examportal.repository.ExamRepository;
 import com.examportal.security.JwtUtil;
 import com.examportal.security.TokenBlacklistService;
 import com.examportal.service.UserService;
@@ -36,8 +35,8 @@ public class UserController {
     private TokenBlacklistService tokenBlacklistService;
 
     @Autowired
-    private ExamRepository examRepository;
-    // private JwtUtil jwtUtil;
+    
+    
 
     // User Registration
     @PostMapping("/register")
@@ -72,13 +71,7 @@ public class UserController {
         }
     }
 
-    // View User Profile
-    @GetMapping("/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or #userId == authentication.principal")
-    public ResponseEntity<User> getUserProfile(@PathVariable Long userId) {
-        User user = userService.getUserById(userId);
-        return ResponseEntity.ok(user);
-    }
+    
 
     // Update User Profile
     @PutMapping("/{userId}")
