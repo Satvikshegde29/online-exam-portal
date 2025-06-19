@@ -16,4 +16,5 @@ public interface AdminService {
     List<Question> getQuestionsByDifficulty(String difficulty);
     Exam createExam(Map<String, Object> examData);
     List<Exam> getAllExams();
+    
 }

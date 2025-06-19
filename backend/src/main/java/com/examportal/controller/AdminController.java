@@ -144,4 +144,12 @@ public ResponseEntity<?> createExam(@RequestBody Map<String, Object> examData) {
         List<Exam> exams = adminService.getAllExams();
         return ResponseEntity.ok(exams);
     }
+    
+    // Get all Questions (Admin only)
+    @GetMapping("/questions")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Question>> getAllQuestions() {
+        List<Question> questions = adminService.getAllQuestions();
+        return ResponseEntity.ok(questions);
+    }
 }

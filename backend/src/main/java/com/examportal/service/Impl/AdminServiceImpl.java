@@ -1,5 +1,11 @@
 package com.examportal.service.Impl;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.examportal.model.Exam;
 import com.examportal.model.Question;
 import com.examportal.model.User;
@@ -7,11 +13,6 @@ import com.examportal.repository.ExamRepository;
 import com.examportal.repository.QuestionRepository;
 import com.examportal.repository.UserRepository;
 import com.examportal.service.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -101,5 +102,6 @@ public class AdminServiceImpl implements AdminService {
     public List<Exam> getAllExams() {
         return examRepository.findAll();
     }
+    
 }
 

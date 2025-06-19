@@ -96,7 +96,10 @@ public class UserController {
 
     // Get All Exams
     @GetMapping("/exams")
-    public ResponseEntity<List<Exam>> getAllExams() {
-        return ResponseEntity.ok(examRepository.findAll());
+    public ResponseEntity<List<Exam>> getAllExams(@RequestHeader("Authorization") String token) {
+         String jwt = token.replace("Bearer ", "");
+
+        String userRole = jwtUtil.extractRole(jwt);
+        return ResponseEntity.ok(userService.getExams(userRole));
     }
 }
