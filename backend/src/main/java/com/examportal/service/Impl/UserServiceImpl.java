@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
-import com.examportal.model.User;
+import com.examportal.exception.ResourceNotFoundException;
 import com.examportal.model.Exam;
-import com.examportal.repository.UserRepository;
+import com.examportal.model.User;
 import com.examportal.repository.ExamRepository;
+import com.examportal.repository.UserRepository;
 import com.examportal.service.UserService;
 
 @Service

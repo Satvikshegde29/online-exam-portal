@@ -1,11 +1,12 @@
 package com.examportal.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.examportal.model.Exam;
 import com.examportal.model.Question;
@@ -24,7 +24,7 @@ import com.examportal.repository.ExamRepository;
 import com.examportal.repository.QuestionRepository;
 import com.examportal.repository.UserRepository;
 import com.examportal.service.AdminService;
-import com.examportal.service.UserService;
+
 
 @RestController
 @RequestMapping("/api/admin")
