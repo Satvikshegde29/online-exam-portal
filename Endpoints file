@@ -1,0 +1,260 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Online-Exam-portal",
+    "collectionId": "41f53a6a-5458-4195-955e-69901f269ad7",
+    "dateExported": "2025-06-19T11:10:01.205Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "cafddf7d-d282-472c-9567-391af43ac0b8",
+            "name": "Register and login",
+            "containerId": "",
+            "created": "2025-06-16T08:43:27.271Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "5fea2601-4daa-48da-97a0-f58cb49347fc",
+            "name": "Exams",
+            "containerId": "",
+            "created": "2025-06-16T11:51:24.957Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "080d03e8-afbd-44e9-afc9-f9179e738446",
+            "name": "Assign Role",
+            "containerId": "",
+            "created": "2025-06-19T10:47:13.127Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "fdc23be2-030b-449c-ba22-99666549397f",
+            "name": "Attempt Exams",
+            "containerId": "",
+            "created": "2025-06-19T11:00:02.289Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "a9ed8f79-76e6-4de8-89c8-5e45e0a3847a",
+            "name": "Report",
+            "containerId": "",
+            "created": "2025-06-19T11:05:36.749Z",
+            "sortNum": 70000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "f4b03896-960c-415f-b67f-7ec6d7179662",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "cafddf7d-d282-472c-9567-391af43ac0b8",
+            "name": "UserRegister",
+            "url": "http:localhost:8080/api/users/register",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2025-06-16T08:51:05.760Z",
+            "modified": "2025-06-18T11:23:15.796Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Satvik\",\n  \"email\": \"satvik@gmail.com\",\n  \"password\":\"1234\",\n  \"role\":\"Admin\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e51e6ff9-ff25-4d5f-9cb5-75d54aa2efb6",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "cafddf7d-d282-472c-9567-391af43ac0b8",
+            "name": "UserLogin( Admin, Examiner, Student)",
+            "url": "http://localhost:8080/api/users/login",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2025-06-16T11:47:47.291Z",
+            "modified": "2025-06-19T10:46:17.154Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\":\"admin123\"\r\n} ",
+                "form": []
+            }
+        },
+        {
+            "_id": "711be95d-1854-4994-a617-7b2c80967b4b",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "5fea2601-4daa-48da-97a0-f58cb49347fc",
+            "name": "create exams",
+            "url": "http:localhost:8080/api/admin/exams",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2025-06-16T11:52:23.719Z",
+            "modified": "2025-06-19T04:31:08.160Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Admin Token should add here"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n  \"title\": \"python Fundamentals\",\r\n  \"description\": \"A test on Java basics and OOP concepts.\",\r\n  \"duration\": 60,\r\n  \"totalMarks\": 100,\r\n  \"examinerId\": 8,\r\n  \"questionId\":[optional]\r\n  \r\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "69b5fe92-a40a-4f24-9d91-d1c6d41981b3",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "5fea2601-4daa-48da-97a0-f58cb49347fc",
+            "name": "create questions",
+            "url": "http://localhost:8080/api/admin/questions",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2025-06-19T04:33:35.225Z",
+            "modified": "2025-06-19T10:46:47.934Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc1MDMyOTk3NywiZXhwIjoxNzUwMzY1OTc3fQ.WxbemkPD9fUxpwVhaTJfgziUdEMcgqL_oKa9jzdiriQ"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"text\": \"What is the capital of France?\",\n  \"category\": \"Geography\",\n  \"difficulty\": \"Easy\",\n  \"correctAnswer\": \"Paris\",\n  \"options\": [\n    \"Paris\",\n    \"London\",\n    \"Berlin\",\n    \"Madrid\"\n  ],\n  \"marks\": 5\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "eedc666e-a700-4385-a3e1-a130426be5bb",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "5fea2601-4daa-48da-97a0-f58cb49347fc",
+            "name": "categorization of questions",
+            "url": "http://localhost:8080/api/admin/exams/{examId}/questions?questionIds={questionId}",
+            "method": "PUT",
+            "sortNum": 60000,
+            "created": "2025-06-19T04:32:07.223Z",
+            "modified": "2025-06-19T10:48:50.120Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "examId",
+                    "value": "",
+                    "isPath": true
+                },
+                {
+                    "name": "questionIds",
+                    "value": "{questionId}",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "f4e5f271-8941-4432-afc7-be141374cf4a",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "5fea2601-4daa-48da-97a0-f58cb49347fc",
+            "name": "Get All exams",
+            "url": "http:localhost:8080/api/admin/exams",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2025-06-19T04:46:31.403Z",
+            "modified": "2025-06-19T04:47:09.165Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "admin token"
+                }
+            ]
+        },
+        {
+            "_id": "65d5abcd-11d2-43f6-979b-9f6f669adcff",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "5fea2601-4daa-48da-97a0-f58cb49347fc",
+            "name": "Get all questions for admin",
+            "url": "http://localhost:8080/api/admin/questions",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2025-06-19T04:47:38.758Z",
+            "modified": "2025-06-19T04:58:34.075Z",
+            "headers": []
+        },
+        {
+            "_id": "0d7b6c88-7380-4aa9-8dae-d8c861e2a319",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "080d03e8-afbd-44e9-afc9-f9179e738446",
+            "name": "Assign role by admin",
+            "url": "http://localhost:8080/api/admin/users/{userId}/role?role=={role name}",
+            "method": "PUT",
+            "sortNum": 100000,
+            "created": "2025-06-19T10:47:32.192Z",
+            "modified": "2025-06-19T10:50:35.409Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userId",
+                    "value": "",
+                    "isPath": true
+                },
+                {
+                    "name": "role",
+                    "value": "={role name}",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "fe675cfa-7e70-4b4c-a99d-8c9434939b31",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "fdc23be2-030b-449c-ba22-99666549397f",
+            "name": "attempt exam",
+            "url": "http://localhost:8080/api/exams/{examid}/submit?userId={userId}",
+            "method": "POST",
+            "sortNum": 110000,
+            "created": "2025-06-19T11:00:25.076Z",
+            "modified": "2025-06-19T11:02:10.385Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "user token"
+                }
+            ],
+            "params": [
+                {
+                    "name": "examid",
+                    "value": "",
+                    "isPath": true
+                },
+                {
+                    "name": "userId",
+                    "value": "{userId}",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"{questionid}\":option index{ option start from zero}\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "c4d40f49-a88e-4a9e-8d43-b04f24aef374",
+            "colId": "41f53a6a-5458-4195-955e-69901f269ad7",
+            "containerId": "a9ed8f79-76e6-4de8-89c8-5e45e0a3847a",
+            "name": "report of users",
+            "url": "http://localhost:8080/api/exams/{examid}/report/{userId}",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2025-06-19T11:08:22.490Z",
+            "modified": "2025-06-19T11:08:48.634Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "examid",
+                    "value": "",
+                    "isPath": true
+                },
+                {
+                    "name": "userId",
+                    "value": "",
+                    "isPath": true
+                }
+            ]
+        }
+    ],
+    "ref": "0BF6KwM-Y6aJouluSdUWjTcybcROGzVxItZyOPC4WnXZHJ_95D9cpBbu0AP0HIGKesQDenUQFkBZxKzOzerzgw"
+}
